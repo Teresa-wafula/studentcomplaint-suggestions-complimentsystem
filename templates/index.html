@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Complaint Management System</title>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <style>
+        /* body {
+            font-family: Tahoma;
+            background-color: rgb(53, 119, 53);
+            color: white;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        .container:after {
+            content: "Speak Up, Let Your Voice be Heard!!!";
+            position: absolute;
+            color: black;
+            bottom: 0;
+            width: 100%;
+            background-color: white;
+            height: 100px;
+        } */
+    </style>
+
+</head>
+
+<body class="bg-success">
+    <div class="container  ">
+        <div class="header-content">
+            <div class="row">
+
+                <div style="margin-top: 50px;"></div>
+                <h3 class="text-center text-light">Welcome To Online Student Affairs Management System!</h>
+                    <h5 class="text-center">Mission</h5>
+                    <p class="text-center">To Combat and prevent corruption and student crime in the university
+                        through
+                        law enforcemnt, preventive measures and promotion of standards and practices of integrity
+                        ethics and anti-corruption</p>
+                    <br><br>
+
+
+                    <p class="text-arial">Create a Whistle Blow Record Anonymously: <a
+                            href="{% url 'complaintform' %}">Whistle Blow
+                            Anonymously</a>
+                    </p>
+                    <p>Register for an Account: <a href="{% url 'register' %}" style="text-decoration: none;">Create
+                            Account</a></p>
+                    <p>Sign in with Account: <a href="{% url 'login' %}" class="text-decoration-none">Sign in</a></p>
+                    <p>Post a Compliment, Suggestion (Account Required): <a href="{% url 'register' %}">Create
+                            Account</a>
+                    </p>
+
+
+                    <!-- <div class="col-lg-6">
+                    <div style="margin-top: 50px;"></div>
+                    <img src="{% static 'assets/img.jpg'%}" class="img" alt="">
+                </div> -->
+            </div>
+        </div>
+
+    </div>
+
+
+</body>
+
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign In</title>
+    <link rel="stylesheet" href="{% static 'css/register.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+</head>
+
+<body>
+    <div class="sign-up-form">
+        <h1>Sign In Now</h1>
+        <form action="" method="post">
+            {% csrf_token %}
+            {% if message %}
+            <div class="alert alert-warning" role="alert">{{ message }}
+            </div>
+            {% endif%}
+            <input type="email" class="input-box" placeholder="Your Email" name="email">
+            <input type="password" class="input-box" placeholder="Your Password" name="password2">
+            <button type="submit" class="signup-btn">Sign In</button>
+
+
+        </form>
+    </div>
+
+</body>
+
+</html>
