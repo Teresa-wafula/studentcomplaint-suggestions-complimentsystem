@@ -1,4 +1,6 @@
+{% load crispy_forms_tags %}
 <!DOCTYPE html>
+
 <html lang="en">
 
 <head>
@@ -10,33 +12,34 @@
 </head>
 
 <body class="bg-success">
-    <div class="container m-auto mt-5 mb-5 bg-light ">
+    <div class="container m-auto mt-5 mb-5 bg-light " >
         <h3>Whistle Blow Anonymously</h3>
         <br><br>
-        <form method="post" action="" class="form p-3 ">
+        <form method="post" action="" class="form p-3 " enctype="multipart/form-data">
             {% csrf_token %}
             <h5>File a Complaint Anonymously</h5>
-            <div class="row">
+            {{ form|crispy }}
+            {% comment %} <div class="row">
                 <div class="col">
                     <label for="category" class="form-label">Complaint Category</label>
                     <select name="category" id="category" class="form-control">
                         <option value="" selected disabled>Select Category</option>
                         <option value="rape">Rape</option>
                         <option value="sexual_misconduct">Sexual Misconduct Complaint</option>
-                        <option value="bullying">Bullying Complaint</option>
+                        <option value="other">Other Complaint</option>
                         <option value="harassment">Harassment Complaint</option>
                     </select>
                 </div>
 
                 <div class="col">
                     <label for="date" class="form-label">Date and Time Of Incident</label>
-                    <input type="date" id="date" class="form-control">
+                    <input type="date" id="date" name="date" class="form-control">
                 </div>
             </div>
 
             <div class="row">
                 <label for="location" class="form-label">Location of Incident</label>
-                <input type="text" for="location" class="form-control">
+                <input type="text" for="location" name="location" class="form-control">
             </div>
             <br>
 
@@ -48,9 +51,9 @@
 
             <div class="row">
                 <label for="evidence" class="form-label">Evidence to Support the Incident</label>
-                <input type="file" id="evidence" class="form-control">
+                <input type="file" id="evidence" name="evidence" class="form-control">
             </div>
-            <br><br>
+            <br><br> {% endcomment %}
 
             <button type="submit" class="btn btn-success mx-auto mb-5 d-block">Submit</button>
         </form>

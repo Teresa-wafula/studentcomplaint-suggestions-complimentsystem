@@ -1,41 +1,63 @@
 # complaints/models.py
 from django.db import models
 from django.utils import timezone
-class Complaint(models.Model):
+class BaseComplaint(models.Model):
     CATEGORY_CHOICES = [
         ('rape', 'Rape Complaint'),
         ('sexual_misconduct', 'Sexual Misconduct Complaint'),
-        ('bullying', 'Bullying Complaint'),
+        ('other', 'Other Complaint'),
         ('harassment', 'Harassment Complaint'),
     ]
     category = models.CharField(max_length=20, choices=CATEGORY_CHOICES)
     date = models.DateField(max_length=100, null=True)
     location = models.CharField(max_length=100, null=True)
     description = models.TextField()
-    evidence = models.FileField(upload_to='uploads/', blank=False, null=False)
+    evidence = models.FileField(blank=False, null=False)
+    email= models.EmailField()
 
     def __str__(self):
         return f"{self.get_category_display()} - {self.description}"
-
-class RapeComplaint(Complaint):
+    
     class Meta:
-        verbose_name = "Rape Complaint"
-        verbose_name_plural = "Rape Complaints"
+        abstract=True
 
-class SexualMisconductComplaint(Complaint):
-    class Meta:
-        verbose_name = "Sexual Misconduct Complaint"
-        verbose_name_plural = "Sexual Misconduct Complaints"
+class Complaint(BaseComplaint):
+    pass
 
-class BullyingComplaint(Complaint):
-    class Meta:
-        verbose_name = "Bullying Complaint"
-        verbose_name_plural = "Bullying Complaints"
+class RapeComplaint(BaseComplaint):
+    def save(self, *args,  **kwargs):
+        self.category='rape'
+        super().save(*args, **kwargs)
+    
+    def __str__(self):
+        return f'Rape Complaint - {self.description}'
 
-class HarassmentComplaint(Complaint):
-    class Meta:
-        verbose_name = "Harassment Complaint"
-        verbose_name_plural = "Harassment Complaints"
+   
+
+class SexualMisconductComplaint(BaseComplaint):
+    def save(self, *args,  **kwargs):
+        self.category='sexual_misconduct'
+        super().save(*args, **kwargs)
+    
+    def __str__(self):
+        return f'Sexual Misconduct ComplaintRape Complaint - {self.description}'
+
+class Other(BaseComplaint):
+        def save(self, *args,  **kwargs):
+            self.category='other'
+            super().save(*args, **kwargs)
+        
+        def __str__(self):
+            return f'Other Complaint - {self.description}'
+
+class HarassmentComplaint(BaseComplaint):
+    def save(self, *args,  **kwargs):
+            self.category='harassment'
+            super().save(*args, **kwargs)
+        
+    def __str__(self):
+        return f'Harassment Complaint - {self.description}'
+
 
 class Student(models.Model):
 

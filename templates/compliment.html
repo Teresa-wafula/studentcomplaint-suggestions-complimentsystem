@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compliment form</title>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+</head>
+
+<body class="container mt-5 bg-light">
+
+
+    <h5 class="text-success">Post Your Compliment Here</h5>
+    <form method="post" action="">
+        {% csrf_token %}
+        <label for="compliment" class="form-label text-success" required>What You are Complimenting About</label>
+        <input type="text" id="compliment" name="compliment" class="form-control">
+
+        <label for="reason" class="form-label text-success">Reason and Impact</label>
+        <textarea name="reason" id="reason" cols="30" rows="10" class="form-control"></textarea>
+        <br>
+
+        <button type="submit" class="btn btn-success">Submit</button>
+
+    </form>
+
+</body>
+
+</html>

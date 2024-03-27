@@ -21,7 +21,13 @@
             {% endif%}
             <input type="email" class="input-box" placeholder="Your Email" name="email">
             <input type="password" class="input-box" placeholder="Your Password" name="password2">
-            <button type="submit" class="signup-btn">Sign In</button>
+            <div>
+                <button type="submit" class="signup-btn">Sign In</button>
+                <span class="forgot float-right"> <i><a href="">Forgot password?</a></i></span>
+            </div>
+
+            <hr>
+            <p>Don't have an Account? <a href="{% url 'register' %}">Sign Up</a></p>
 
 
         </form>

@@ -18,7 +18,7 @@ body {
     padding: 20px;
     margin: 8% auto 0;
     text-align: center;
-    width: 30%;
+    width: 40%;
     border-radius: 8px;
 
 }
@@ -54,6 +54,9 @@ button {
 
 .signup-btn {
     background-color: rgb(63, 110, 63);
+    border-radius: 8px;
+    width: 30%;
+    border-radius: 8px;
 }
 
 .google-btn {
@@ -64,6 +67,7 @@ a {
     text-decoration: none;
 }
 
+
 hr {
     margin-top: 20px;
     width: 80%;
@@ -73,4 +77,9 @@ hr {
     background: #fff;
     width: 30px;
     margin: -19px auto 10px;
+}
+
+span {
+    justify-content: end;
+    border: 2px solid red;
 }

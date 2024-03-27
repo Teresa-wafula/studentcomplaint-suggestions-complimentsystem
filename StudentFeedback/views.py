@@ -1,4 +1,7 @@
 from django.shortcuts import render, redirect
+from django.conf import settings
+from django.core.mail import EmailMessage
+from StudentFeedback.forms import ComplaintForm
 from .models import *
 from django.contrib import messages
 # Create your views here.
@@ -57,36 +60,64 @@ def login(request):
 def index(request):
     return render(request, 'index.html')
 
-def complaintform(request):
-    if request.method == 'POST':
-        # Extract form data from request.POST
-        category = request.POST.get('category')
-        date= request.POST.get('date')
-        location = request.POST.get('location')
-        description = request.POST.get('description')
-        evidence = request.FILES.get('evidence')
 
-        # Determine the specific complaint model based on the selected category
-        if category == 'rape':
-            complaint_model = RapeComplaint
-        elif category == 'sexual_misconduct':
-            complaint_model = SexualMisconductComplaint
-        elif category == 'bullying':
-            complaint_model = BullyingComplaint
-        elif category == 'harassment':
-            complaint_model = HarassmentComplaint
+def submit_complaint(request):
+    if request.method == "POST":
+        form = ComplaintForm(request.POST, request.FILES)
+        if form.is_valid():
+            email=request.user.email if request.user.is_authenticated else form.cleaned_data['email']
+            complaint = form.save(commit=False)
+            complaint.email='Anonymous'
+            complaint.save()
+            notifications(complaint)
+            return redirect('/')
         
-        # Create a new instance of the determined complaint model and save it
-        complaint = complaint_model.objects.create(
-            category=category,
-            date=date,
-            location=location,
-            description=description,
-            evidence=evidence
-        )
 
-        # Redirect to a page confirming successful submission
-        return redirect('/')
 
-    return render(request, 'complaintform.html')
+    else:
+        form=ComplaintForm()
+    return render(request, 'complaintform.html', {'form': form})
+
+def notifications(complaint):
+    subject = 'A new submission has been added'
+    message= f'Category: {complaint.category} \n  Description: {complaint.description} \n Submitted By: {complaint.email}'
+    admin_email=settings.ADMIN_EMAIL
+    email=EmailMessage(subject, message,'wafula.nambande@kyu.ac.ke', [admin_email])
+    email.send(fail_silently=False)
+
+
+# def complaintform(re:quest):
+#     if request.method == 'POST':
+#         # Extract form data from request.POST
+#         category = request.POST.get('category')
+#         date= request.POST.get('date')
+#         location = request.POST.get('location')
+#         description = request.POST.get('description')
+#         evidence = request.FILES.get('evidence')
+
+#         # Determine the specific complaint model based on the selected category
+#         if category == 'rape':
+#             complaint_model = RapeComplaint
+#         elif category == 'sexual_misconduct':
+#             complaint_model = SexualMisconductComplaint
+#         elif category == 'other':
+#             complaint_model = Other
+#         elif category == 'harassment':
+#             complaint_model = HarassmentComplaint
+        
+#         # Create a new instance of the determined complaint model and save it
+#         complaint = complaint_model.objects.create(
+#             category=category,
+#             date=date,
+#             location=location,
+#             description=description,
+#             evidence=evidence
+#         )
+
+#         # print(complaint)
+
+#         # Redirect to a page confirming successful submission
+#         return redirect('/')
+
+#     return render(request, 'complaintform.html')
 
